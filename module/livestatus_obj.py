@@ -110,7 +110,7 @@ class LiveStatus(object):
             return '', False
 
         cur_idx = 0
-        keepalive = False
+        keepalive = 'off'
 
         for query in queries:  # process the command(s), if any.
             # as they are sorted alphabetically, once we get one which isn't a 'command'..
@@ -123,7 +123,7 @@ class LiveStatus(object):
             cur_idx += 1
 
         if 'wait' in queries_type:
-            keepalive = True
+            keepalive = 'on'
             # we return  'wait' first and 'query' second..
             output = list(reversed(queries[cur_idx:]))
         elif len(queries[cur_idx:]):

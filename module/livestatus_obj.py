@@ -117,6 +117,9 @@ class LiveStatus(object):
             if query.my_type != 'command':
                 break   # then we are done.
             query.process_query()
+            # According to mk_livestatus documentation
+            # COMMAND automatically implies keep alive and behave like GET when KeepAlive is set to on.
+            keepalive = 'on'
             # according to Check_Mk, COMMAND doesn't require a response (argh!),
             # that is no response or more simply: an empty response:
             output = ''

@@ -403,7 +403,14 @@ class LiveStatus_broker(BaseModule, Daemon):
 
             if db_commit_next_time < now:
                 db_commit_next_time = now + 3  # only commit every ~3 secs
-                self.db.commit_and_rotate_log_db()
+                try:
+                    self.db.commit_and_rotate_log_db()
+                except Exception as err:
+                    logger.exception(
+                        "[%s] Warning: The mod %s raise an exception: %s,"
+                        "I'm tagging it to restart later",
+                        self.name, self.db.get_name(), err)
+                    self.modules_manager.set_to_restart(self.db)
 
             try:
                 l = self.to_q.get(True, 1)

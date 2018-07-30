@@ -437,5 +437,7 @@ class LiveStatus_broker(BaseModule, Daemon):
                 # in our input queue:
                 time.sleep(0.1)
 
+            self.modules_manager.try_to_restart_deads()
+
         # end: while not self.interrupted:
         self.do_stop()
